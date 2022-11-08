@@ -29,6 +29,14 @@ describe('ScoreBoard', () => {
     expect(scoreBoard.player1Score).toEqual(10);
     expect(scoreBoard.player2Score).toEqual(0);
   });
+  
+  test('add current score to the player points', () => {
+    scoreBoard.playerTurn = 2;
+    scoreBoard.currentScore = 10;
+    scoreBoard.addPlayerPoints();
+    expect(scoreBoard.player2Score).toEqual(10);
+    expect(scoreBoard.player1Score).toEqual(0);
+  });
 
   test('roll dice', () => {
     scoreBoard.roll();
@@ -47,6 +55,17 @@ describe('ScoreBoard', () => {
     scoreBoard.player2Score = 80;
     scoreBoard.currentScore = 21;
     expect(scoreBoard.CalculateTotalScore()).toEqual(2);
+  });
+
+  test('determine winner', () => {
+    scoreBoard.dice.curRoll = 1;
+    expect(scoreBoard.CalculateTotalScore()).toEqual(0);
+  });
+
+  test('determine winner', () => {
+    scoreBoard.player2Score = 70;
+    scoreBoard.currentScore = 21;
+    expect(scoreBoard.CalculateTotalScore()).toEqual(-1);
   });
 
   test('reset current score', () => {
