@@ -1,70 +1,48 @@
-// --If the player rolls a 1, they score nothing and it becomes the next player's turn.
-// --If the player rolls any other number, it is added to their turn total and the player's turn continues.
-// --If a player chooses to "hold", their turn total is added to their score, and it becomes the next player's turn.
-// --The first player to score 100 or more points wins.
-// --At any time, the relevant decision information includes the player's score, the opponent's score, and the turn total. Such information corresponds to a 3D point in the graph's space. If this point is inside the gray solid, the player should roll. Otherwise, the player should hold.
-// scoreboard objec
-
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import ScoreBoard from './scoreboard.js';
-import Dice from './dice';
-//Dice object
+import SudokuBoard from './SudokuBoard.js';
 
-
-let die = new Dice(6);
-let scoreBoard = new ScoreBoard(die);
-
-
-document.getElementById("roll").addEventListener("click", function () {
-  scoreBoard.roll() ;
-});
-document.getElementById("roll").addEventListener("click", function () {
-  scoreBoard.CalculateTotalScore() ;
-});
-document.getElementById("hold").addEventListener("click", function () { scoreBoard.holdPoints();
-});
-
-//UI
-function displayWhichPlayerTurn() {
-  let playerTurn = document.getElementById("player-turn");
-  if (scoreBoard.playerTurn % 2 === 1) {
-    playerTurn.innerText = "Player 1's Turn"
-  }
-  else {
-    playerTurn.innerText = "Player 2's Turn"
-  }
-}
-function displayCurrentRolls() {
-  document.getElementById("current-roll").innerText = scoreBoard.dice.curRoll;
-  document.getElementById("current-score").innerText = scoreBoard.currentScore;
-  
-}
-
-function displayPlayerScore() {
-  document.getElementById("player1-score").innerText = scoreBoard.player1Score;
-  document.getElementById("player2-score").innerText = scoreBoard.player2Score;
-  document.getElementById("current-roll").innerText = 0;
-  document.getElementById("current-score").innerText = 0;
-}
-function displayWinner() {
-  const winner = scoreBoard.CalculateTotalScore();
-  if (winner === 1) {
-    prompt("Winner 1");
-  } else {
-    if (winner === 2) {
-      prompt("Winner 2");
+let sudokuboard;
+function checkBoard(){
+  for(let i = 0; i < sudokuboard.size; i++){
+    for(let j = 0; j < sudokuboard.size; j++){
+      console.log(document.getElementById(i.toString()+j.toString()).value);
+      sudokuboard.addValue(i, j, document.getElementById(i.toString()+j.toString()).value);
     }
   }
+  if(sudokuboard.checkBoard()){
+    document.getElementById("output").innerText = "valid board";
+  }
+  else {
+    document.getElementById("output").innerText = "wrong answer";
+  }
 }
 
+function handleForm(event) {
+  event.preventDefault();
+  const size = document.getElementById("size").value;
+  sudokuboard = new SudokuBoard(size);
+  console.log(sudokuboard.size);
+  for(let i = 0; i < size; i++){
+    const divRow = document.createElement("div");
+    for(let j = 0; j < size; j++){
+      const input = document.createElement("input");
+      input.setAttribute("type", "number");
+      input.setAttribute("id", i.toString()+j.toString());
+      input.value = 0;
+      divRow.append(input);
 
-document.getElementById("roll").addEventListener("click", function () {
-  displayWhichPlayerTurn();
-  displayCurrentRolls();
-});
-document.getElementById("hold").addEventListener("click", function () { 
-  displayPlayerScore();
-  displayWhichPlayerTurn()
+    }
+    document.getElementById("board").append(divRow);
+  }
+  const button = document.createElement("button");
+  button.setAttribute("type", "button");
+  button.innerText = "check";
+  button.addEventListener("click", checkBoard);
+  document.getElementById("board").append(button);
+}
+
+window.addEventListener("load", function () {
+  this.document.getElementById("board-form").addEventListener("submit", handleForm);
 });

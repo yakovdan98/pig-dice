@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pig Dice</title>
+  <title>Sudoku Checker</title>
 </head>
-<body class="conatiner text-center">
-  <div>
-    <div>Player 1 Score: <span id="player1-score"></span> </div>
-    <div>Player 2 Score: <span id="player2-score"></span></div>
-    <div>Who's Turn Is It?: <span id="player-turn"></span></div>
-    <div>Current Roll: <span id="current-roll"></span></div>
-    <div>Current Score: <span id="current-score"></span></div>
-    <button id="roll" type="button">Roll Mutha fuckaaa</button>
-    <button id="hold" type="button">Hold deez nuts</button>
-</div>
+<body>
+  <form id="board-form">
+  <label for="size">
+    size of board</label>
+  <input type="number" name="size" id="size">
+  <button type="submit">submit</button>
+  <div id="board" class="board"></div>
+</form>
+<div id="output"></div>
 </body>
 </html>

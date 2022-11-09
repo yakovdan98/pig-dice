@@ -7,7 +7,10 @@ button {
 }
 
 div {
-  margin: 50px;
-  height: 50px;
+  margin: 0px;
   border: 1px solid gray;
+}
+
+input {
+  width: 40px;
 }
